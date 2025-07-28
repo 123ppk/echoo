@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Ecoo</title>
+  <!-- Google Eco-like Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&display=swap" rel="stylesheet">
+
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: #ffffff ;
+      color: #222;
+    }
+
+    header {
+      background-color: #57924e;
+      padding: 1em;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: white;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 22px;
+      font-family: 'Playfair Display', serif; /* ✅ Eco logo font applied */
+      letter-spacing: 1px;
+    }
+
+    #authBtn {
+      background:#26bf26;
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      cursor: pointer;
+      border-radius: 6px;
+    }
+
+    #loginSection {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 80vh;
+    }
+
+    .login-box {
+      background: #fff;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 400px;
+      text-align: center;
+    }
+
+    .login-box input {
+      width: 90%;
+      padding: 10px;
+      margin: 10px 0;
+      border-radius: 8px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+    }
+
+    .login-box button {
+      width: 95%;
+      padding: 10px;
+      background-color:#57924e;
+      color: white;
+      border: none;
+      font-size: 16px;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: 20px auto;
+      padding: 0 10px;
+    }
+
+    #formSection {
+      background: #fafafa;
+      padding: 20px;
+      border-radius: 10px;
+      margin-bottom: 30px;
+      display: none;
+    }
+
+    #formSection input, #formSection textarea {
+      width: 95%;
+      padding: 10px;
+      margin: 8px 0;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-size: 16px;
+    }
+
+    #formSection button {
+      background-color: black;
+      color: white;
+      padding: 10px 18px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+    #productList {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: center;
+    }
+
+    .product-card {
+      background: #fff;
+      border: 1px solid #ccc;
+      border-radius: 12px;
+      padding: 15px;
+      max-width: 280px;
+      width: 100%;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+      position: relative;
+      text-align: center;
+      word-wrap: break-word;
+    }
+
+    .product-card img {
+      width: 100%;
+      height: 200px;
+      object-fit: contain;
+      border-radius: 10px;
+      cursor: zoom-in;
+    }
+
+    .product-card h4 {
+      margin: 10px 0 5px;
+    }
+
+    .product-card p {
+      margin: 5px 0;
+      font-size: 14px;
+      word-wrap: break-word;
+    }
+
+    .buy-button {
+      background-color: #57924e;
+      color: white;
+      padding: 8px 14px;
+      border-radius: 6px;
+      text-decoration: none;
+      display: inline-block;
+      margin-top: 10px;
+    }
+
+    .no-return {
+      color: red;
+      font-size: 13px;
+    }
+
+    .delete-icon {
+      position: absolute;
+      top: 8px;
+      right: 10px;
+      cursor: pointer;
+      font-size: 18px;
+      color: #666;
+    }
+
+    #imgModal {
+      display: none;
+      position: fixed;
+      z-index: 10000;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.9);
+      align-items: center;
+      justify-content: center;
+    }
+
+    #imgModal img {
+      max-width: 90%;
+      max-height: 90vh;
+      border-radius: 12px;
+    }
+
+    @media (max-width: 768px) {
+      .product-card img {
+        height: 160px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<!-- 🌿 Banner Section -->
+<div style="background-color: #004d00; color: white; text-align: center; padding: 10px 0; font-size: 18px;">
+  🌿 Welcome to Our Eco Mini eCommerce Store – Quality Products, No Returns!
+</div>
+
+<header>
+  <h1>🛒 Ecoo</h1>
+  <button id="authBtn" onclick="toggleLogin()">Login</button>
+</header>
+
+<!-- Login -->
+<div id="loginSection">
+  <div class="login-box">
+    <h2>Admin Login</h2>
+    <input type="email" id="loginEmail" placeholder="Email" />
+    <input type="password" id="loginPassword" placeholder="Password" />
+    <button onclick="login()">Login</button>
+  </div>
+</div>
+
+<!-- Main -->
+<div class="container">
+  <div id="formSection">
+    <h3>Add Product</h3>
+    <input type="text" id="pname" placeholder="Product Name" />
+    <input type="text" id="price" placeholder="Price ₹" />
+    <input type="text" id="desc" placeholder="Product Description" />
+    <input type="text" id="contact" placeholder="Contact No" />
+    <input type="url" id="gpay" placeholder="GPay Link" />
+    <input type="file" id="image" accept="image/*" />
+    <button onclick="addProduct()">Add Product</button>
+  </div>
+
+  <div id="productList"></div>
+</div>
+
+<!-- Image Modal -->
+<div id="imgModal" onclick="closeModal()">
+  <img id="modalImg" />
+</div>
+
+<script>
+  const ADMIN_EMAIL = "admin@example.com";
+  const ADMIN_PASS = "admin123";
+
+  const loginSection = document.getElementById("loginSection");
+  const formSection = document.getElementById("formSection");
+  const productList = document.getElementById("productList");
+  const authBtn = document.getElementById("authBtn");
+
+  let isAdmin = false;
+
+  function login() {
+    const email = document.getElementById("loginEmail").value.trim();
+    const pass = document.getElementById("loginPassword").value.trim();
+    if (email === ADMIN_EMAIL && pass === ADMIN_PASS) {
+      isAdmin = true;
+      loginSection.style.display = "none";
+      formSection.style.display = "block";
+      authBtn.innerText = "Logout";
+      renderProducts();
+    } else {
+      alert("Invalid credentials");
+    }
+  }
+
+  function toggleLogin() {
+    if (isAdmin) {
+      logout();
+    } else {
+      loginSection.style.display = "flex";
+    }
+  }
+
+  function logout() {
+    isAdmin = false;
+    loginSection.style.display = "none";
+    formSection.style.display = "none";
+    authBtn.innerText = "Login";
+    renderProducts();
+  }
+
+  function addProduct() {
+    const pname = document.getElementById("pname").value;
+    const price = document.getElementById("price").value;
+    const desc = document.getElementById("desc").value;
+    const contact = document.getElementById("contact").value;
+    const gpay = document.getElementById("gpay").value;
+    const file = document.getElementById("image").files[0];
+
+    if (!pname || !price || !file) {
+      alert("Fill all fields and select image!");
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      const products = JSON.parse(localStorage.getItem("products") || "[]");
+      products.push({ pname, price, desc, contact, gpay, image: e.target.result, noReturn: true });
+      localStorage.setItem("products", JSON.stringify(products));
+      renderProducts();
+      formSection.querySelectorAll("input").forEach(i => i.value = "");
+    };
+    reader.readAsDataURL(file);
+  }
+
+  function renderProducts() {
+    const products = JSON.parse(localStorage.getItem("products") || "[]");
+    productList.innerHTML = "";
+    products.forEach((prod, i) => {
+      const card = document.createElement("div");
+      card.className = "product-card";
+
+      const img = document.createElement("img");
+      img.src = prod.image;
+      img.onclick = () => zoomImage(prod.image);
+      card.appendChild(img);
+
+      const info = document.createElement("div");
+      info.innerHTML = `
+        <h4>${prod.pname}</h4>
+        <p><strong>₹${prod.price}</strong></p>
+        <p>${prod.desc}</p>
+        <p>Contact: ${prod.contact}</p>
+        <a class="buy-button" href="${prod.gpay}" target="_blank">Buy via GPay</a>
+        <p class="no-return">No Return</p>
+      `;
+      card.appendChild(info);
+
+      if (isAdmin) {
+        const del = document.createElement("span");
+        del.className = "delete-icon";
+        del.innerHTML = "🗑️";
+        del.onclick = () => deleteProduct(i);
+        card.appendChild(del);
+      }
+
+      productList.appendChild(card);
+    });
+  }
+
+  function deleteProduct(i) {
+    const products = JSON.parse(localStorage.getItem("products") || "[]");
+    products.splice(i, 1);
+    localStorage.setItem("products", JSON.stringify(products));
+    renderProducts();
+  }
+
+  function zoomImage(src) {
+    document.getElementById("modalImg").src = src;
+    document.getElementById("imgModal").style.display = "flex";
+  }
+
+  function closeModal() {
+    document.getElementById("imgModal").style.display = "none";
+  }
+
+  window.onload = () => {
+    renderProducts();
+    loginSection.style.display = "none";
+  };
+</script>
+</body>
+</html>
