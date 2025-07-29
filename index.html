@@ -1,12 +1,11 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Ecoo</title>
-  <!-- Google Eco-like Font -->
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&display=swap" rel="stylesheet">
-
   <style>
     * { box-sizing: border-box; }
     body {
@@ -15,7 +14,6 @@
       background: #ffffff ;
       color: #222;
     }
-
     header {
       background-color: #57924e;
       padding: 1em;
@@ -24,14 +22,12 @@
       align-items: center;
       color: white;
     }
-
     header h1 {
       margin: 0;
       font-size: 22px;
-      font-family: 'Playfair Display', serif; /* ✅ Eco logo font applied */
+      font-family: 'Playfair Display', serif;
       letter-spacing: 1px;
     }
-
     #authBtn {
       background:#26bf26;
       color: white;
@@ -40,14 +36,12 @@
       cursor: pointer;
       border-radius: 6px;
     }
-
     #loginSection {
       display: flex;
       justify-content: center;
       align-items: center;
       height: 80vh;
     }
-
     .login-box {
       background: #fff;
       padding: 30px;
@@ -57,7 +51,6 @@
       max-width: 400px;
       text-align: center;
     }
-
     .login-box input {
       width: 90%;
       padding: 10px;
@@ -66,7 +59,6 @@
       font-size: 16px;
       border: 1px solid #ccc;
     }
-
     .login-box button {
       width: 95%;
       padding: 10px;
@@ -77,13 +69,11 @@
       border-radius: 8px;
       cursor: pointer;
     }
-
     .container {
       max-width: 1000px;
       margin: 20px auto;
       padding: 0 10px;
     }
-
     #formSection {
       background: #fafafa;
       padding: 20px;
@@ -91,8 +81,7 @@
       margin-bottom: 30px;
       display: none;
     }
-
-    #formSection input, #formSection textarea {
+    #formSection input {
       width: 95%;
       padding: 10px;
       margin: 8px 0;
@@ -100,7 +89,6 @@
       border: 1px solid #ccc;
       font-size: 16px;
     }
-
     #formSection button {
       background-color: black;
       color: white;
@@ -110,14 +98,12 @@
       cursor: pointer;
       margin-top: 10px;
     }
-
     #productList {
       display: flex;
       flex-wrap: wrap;
       gap: 20px;
       justify-content: center;
     }
-
     .product-card {
       background: #fff;
       border: 1px solid #ccc;
@@ -130,7 +116,6 @@
       text-align: center;
       word-wrap: break-word;
     }
-
     .product-card img {
       width: 100%;
       height: 200px;
@@ -138,17 +123,6 @@
       border-radius: 10px;
       cursor: zoom-in;
     }
-
-    .product-card h4 {
-      margin: 10px 0 5px;
-    }
-
-    .product-card p {
-      margin: 5px 0;
-      font-size: 14px;
-      word-wrap: break-word;
-    }
-
     .buy-button {
       background-color: #57924e;
       color: white;
@@ -158,12 +132,6 @@
       display: inline-block;
       margin-top: 10px;
     }
-
-    .no-return {
-      color: red;
-      font-size: 13px;
-    }
-
     .delete-icon {
       position: absolute;
       top: 8px;
@@ -172,7 +140,6 @@
       font-size: 18px;
       color: #666;
     }
-
     #imgModal {
       display: none;
       position: fixed;
@@ -183,33 +150,21 @@
       align-items: center;
       justify-content: center;
     }
-
     #imgModal img {
       max-width: 90%;
       max-height: 90vh;
       border-radius: 12px;
     }
-
-    @media (max-width: 768px) {
-      .product-card img {
-        height: 160px;
-      }
-    }
   </style>
 </head>
 <body>
-
-<!-- 🌿 Banner Section -->
 <div style="background-color: #004d00; color: white; text-align: center; padding: 10px 0; font-size: 18px;">
   🌿 Welcome to Our Eco Mini eCommerce Store – Quality Products, No Returns!
 </div>
-
 <header>
   <h1>🛒 Ecoo</h1>
   <button id="authBtn" onclick="toggleLogin()">Login</button>
 </header>
-
-<!-- Login -->
 <div id="loginSection">
   <div class="login-box">
     <h2>Admin Login</h2>
@@ -218,8 +173,6 @@
     <button onclick="login()">Login</button>
   </div>
 </div>
-
-<!-- Main -->
 <div class="container">
   <div id="formSection">
     <h3>Add Product</h3>
@@ -231,24 +184,18 @@
     <input type="file" id="image" accept="image/*" />
     <button onclick="addProduct()">Add Product</button>
   </div>
-
   <div id="productList"></div>
 </div>
-
-<!-- Image Modal -->
 <div id="imgModal" onclick="closeModal()">
   <img id="modalImg" />
 </div>
-
 <script>
   const ADMIN_EMAIL = "admin@example.com";
   const ADMIN_PASS = "admin123";
-
   const loginSection = document.getElementById("loginSection");
   const formSection = document.getElementById("formSection");
   const productList = document.getElementById("productList");
   const authBtn = document.getElementById("authBtn");
-
   let isAdmin = false;
 
   function login() {
@@ -288,16 +235,14 @@
     const contact = document.getElementById("contact").value;
     const gpay = document.getElementById("gpay").value;
     const file = document.getElementById("image").files[0];
-
     if (!pname || !price || !file) {
       alert("Fill all fields and select image!");
       return;
     }
-
     const reader = new FileReader();
     reader.onload = function(e) {
       const products = JSON.parse(localStorage.getItem("products") || "[]");
-      products.push({ pname, price, desc, contact, gpay, image: e.target.result, noReturn: true });
+      products.push({ pname, price, desc, contact, gpay, image: e.target.result });
       localStorage.setItem("products", JSON.stringify(products));
       renderProducts();
       formSection.querySelectorAll("input").forEach(i => i.value = "");
@@ -311,12 +256,10 @@
     products.forEach((prod, i) => {
       const card = document.createElement("div");
       card.className = "product-card";
-
       const img = document.createElement("img");
       img.src = prod.image;
       img.onclick = () => zoomImage(prod.image);
       card.appendChild(img);
-
       const info = document.createElement("div");
       info.innerHTML = `
         <h4>${prod.pname}</h4>
@@ -324,10 +267,8 @@
         <p>${prod.desc}</p>
         <p>Contact: ${prod.contact}</p>
         <a class="buy-button" href="${prod.gpay}" target="_blank">Buy via GPay</a>
-        <p class="no-return">No Return</p>
       `;
       card.appendChild(info);
-
       if (isAdmin) {
         const del = document.createElement("span");
         del.className = "delete-icon";
@@ -335,7 +276,6 @@
         del.onclick = () => deleteProduct(i);
         card.appendChild(del);
       }
-
       productList.appendChild(card);
     });
   }
